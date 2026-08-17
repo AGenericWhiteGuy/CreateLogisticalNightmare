@@ -1,0 +1,5 @@
+
+[portal]
+	#Item required to activate a Nether Portal)
+	requiredItemId = "minecraft:nether_star"
+
