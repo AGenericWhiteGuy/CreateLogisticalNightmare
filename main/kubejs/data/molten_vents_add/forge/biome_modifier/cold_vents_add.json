@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_cold",
+  "features": [
+  "climate:scoria_vent_common"
+  ],
+  "step": "vegetal_decoration"    
+}

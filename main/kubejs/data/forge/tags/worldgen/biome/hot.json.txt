@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:badlands",
+    "minecraft:desert",
+    "minecraft:jungle",
+    "minecraft:bamboo_jungle",
+    "minecraft:savanna",
+    "minecraft:savannna_plateau",
+    "minecraft:sparse_jungle",
+    "minecraft:wooded_badlands",
+    "minecraft:windswept_savanna",
+  ]
+}
