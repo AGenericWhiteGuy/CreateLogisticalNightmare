@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:frozen_ocean",
+    "minecraft:deep_frozen_ocean",
+    "biomeswevegone:eroded_borealis",
+    "biomeswevegone:frosted_coniferous_forest",
+    "biomeswevegone:frosted_taiga"
+  ]
+}

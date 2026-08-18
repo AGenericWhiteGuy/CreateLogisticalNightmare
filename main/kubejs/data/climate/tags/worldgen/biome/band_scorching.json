@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "biomeswevegone:atacama_outback",
+    "biomeswevegone:basalt_barrera",
+    "biomeswevegone:dead_sea",
+    "biomeswevegone:mojave_desert",
+    "biomeswevegone:rugged_badlands"
+  ]
+}

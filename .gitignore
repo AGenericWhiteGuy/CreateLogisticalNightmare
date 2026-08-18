@@ -1,2 +1,6 @@
 .idea/
 .vscode/
+
+# Disposable debug exports / machine-specific caches, not real config
+main/config/listplease/*.txt
+main/config/embeddium-fingerprint.json

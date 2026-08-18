@@ -5,7 +5,7 @@ equatorial_distance = 5000
 looping_world = false
 #0: DEFAULT, 1: SIMPLIFIED, 2: LINEAR, 3: CUSTOM CIRCULAR, 4: CIRCULAR, 5: CUSTOM BANDED, 6: BANDED. You can see examples on the official modrinth page: https://modrinth.com/mod/natural-temperature/gallery
 #Range: 0 ~ 105
-generation_mode = 3
+generation_mode = 7
 #Positive values will move the equator to the north, if you want the equator to be at 0 set this value the same as your equatorial_distance
 #Range: -6.0E12 ~ 6.0E12
 equator_offset = 0.0
@@ -34,11 +34,11 @@ wave_magnification = 2.0
 #Range: -1.0 ~ 8.0
 temperature_zone_1 = 0.0
 #Range: -1.0 ~ 8.0
-temperature_zone_2 = 1
+temperature_zone_2 = 0.5
 #Range: -1.0 ~ 8.0
-temperature_zone_3 = -1
+temperature_zone_3 = 1.0
 #Range: -1.0 ~ 8.0
-temperature_zone_4 = -1
+temperature_zone_4 = -0.5
 #Range: -1.0 ~ 8.0
 temperature_zone_5 = -1.0
 #Range: -1.0 ~ 8.0
@@ -61,17 +61,17 @@ humidity_zone_6 = 8.0
 info_humidity_offset = 0.0
 #(Range 1.0 , 100.0 ) These are used to customize the coverage of the bands in modes 5 and 6. The sum does not necessarily have to be 100. I used real life references
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_1 = 20.0
+percentage_coverage_zone_1 = 28.0
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_2 = 20.0
+percentage_coverage_zone_2 = 27.0
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_3 = 10.0
+percentage_coverage_zone_3 = 27.0
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_4 = 15.0
+percentage_coverage_zone_4 = 8.0
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_5 = 22.0
+percentage_coverage_zone_5 = 7.0
 #Range: 1.0 ~ 100.0
-percentage_coverage_zone_6 = 14.0
+percentage_coverage_zone_6 = 3.0
 #This will enable a humidity (or vegetation) distribution in bands perpendicular to the temperature distribution. It works on simplified mode and linear mode
 enable_humidity_bands = false
 #This is a quarter of the distance between two zones of maximum humidity

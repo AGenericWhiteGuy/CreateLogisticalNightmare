@@ -18,11 +18,11 @@
     "spaghetti_enabled": true
   },
   "continents": {
-    "continents_scale": 0.13,
-    "erosion_scale": 0.25,
+    "continents_scale": 0.03,
+    "erosion_scale": 0.05,
     "flat_terrain_skew": 0.1,
     "jungle_pillars": true,
-    "ocean_offset": -0.15,
+    "ocean_offset": 0.0,
     "ridge_scale": 0.25,
     "river_lanterns": true,
     "rolling_hills": true,
@@ -30,7 +30,7 @@
   },
   "general": {
     "mod_enabled": true,
-    "snow_start_offset": 128
+    "snow_start_offset": 180
   },
   "global_terrain": {
     "elevation_boost": 0.0,

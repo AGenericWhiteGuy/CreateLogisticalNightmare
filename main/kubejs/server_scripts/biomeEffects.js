@@ -22,16 +22,20 @@ ServerEvents.tick(event => {
         let hot = false
         let cold = false
 
-        //assigns tag heat value
-        tags.forEach(tag => {
-            let id = tag.location().toString()
+        // elevation overrides latitude band: Y>=120 always reads as Mild
+        // (mountains falsely read as cold from Tectonic's snow_start_offset=128)
+        if (player.blockPosition().getY() < 120) {
+            //assigns tag heat value
+            tags.forEach(tag => {
+                let id = tag.location().toString()
 
-            if (id == 'climate:band_hot')
-                hot = true
+                if (id == 'climate:band_hot')
+                    hot = true
 
-            if (id == 'climate:band_cold')
-                cold = true
-        })
+                if (id == 'climate:band_cold')
+                    cold = true
+            })
+        }
 
 
 

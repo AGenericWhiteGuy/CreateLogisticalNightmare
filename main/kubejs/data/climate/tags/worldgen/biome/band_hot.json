@@ -8,6 +8,18 @@
     "minecraft:savanna",
     "minecraft:savanna_plateau",
     "minecraft:sparse_jungle",
-    "minecraft:wooded_badlands"
+    "minecraft:wooded_badlands",
+    "minecraft:warm_ocean",
+    "biomeswevegone:araucaria_savanna",
+    "biomeswevegone:baobab_savanna",
+    "biomeswevegone:firecracker_chaparral",
+    "biomeswevegone:ironwood_gour",
+    "biomeswevegone:jacaranda_jungle",
+    "biomeswevegone:lush_stacks",
+    "biomeswevegone:rainbow_beach",
+    "biomeswevegone:red_rock_valley",
+    "biomeswevegone:redwood_thicket",
+    "biomeswevegone:sierra_badlands",
+    "biomeswevegone:tropical_rainforest"
   ]
 }
