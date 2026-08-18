@@ -8,8 +8,8 @@ ServerEvents.tick(event => {
 
         console.log(
             'Biome: ' + biomeID +
-            ' | Cold: ' + biome.is("forge:is_cold") +
-            ' | Hot: ' + biome.is("forge:is_hot")
+            ' | Cold: ' + biome.is("climate:band_cold") +
+            ' | Hot: ' + biome.is("climate:band_hot")
         )
     })
 })

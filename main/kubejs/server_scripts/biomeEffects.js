@@ -26,10 +26,10 @@ ServerEvents.tick(event => {
         tags.forEach(tag => {
             let id = tag.location().toString()
 
-            if (id == 'forge:is_hot')
+            if (id == 'climate:band_hot')
                 hot = true
 
-            if (id == 'forge:is_cold')
+            if (id == 'climate:band_cold')
                 cold = true
         })
 

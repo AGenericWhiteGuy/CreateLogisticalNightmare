@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#forge:mild",
+  "biomes": "#climate:band_mild",
   "features": [
   "climate:asurine_vent_common",
   "climate:crimsite_vent_common"
