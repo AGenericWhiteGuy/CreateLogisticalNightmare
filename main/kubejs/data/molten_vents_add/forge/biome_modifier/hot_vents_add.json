@@ -2,8 +2,7 @@
   "type": "forge:add_features",
   "biomes": "#climate:band_hot",
   "features": [
-  "climate:scorchia_vent_common",
-"climate:ochrum_vent_common"
+  "climate:scorchia_vent_common"
   ],
   "step": "vegetal_decoration"    
 }

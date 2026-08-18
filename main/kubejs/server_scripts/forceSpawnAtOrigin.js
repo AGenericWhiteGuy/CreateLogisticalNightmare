@@ -8,17 +8,18 @@
 // the bullseye's center. Search radius stays small so we're always still deep inside
 // the Mild ring (0-28% of `equatorial_distance`) regardless of which direction we drift.
 //
-// Multiplayer note: the search forces chunk generation across ~100+ points, which is
-// fine once but adds real startup latency to a dedicated server on every restart if run
-// unconditionally. Vanilla already persists `/setworldspawn` in level.dat on its own, so
-// this only needs to run once ever — a flag in the overworld's persistent data (which
-// survives restarts, unlike a plain JS variable) skips the scan on every boot after the
-// first.
-//
-// Needs in-game verification like everything else in Phase 1 — in particular
-// `event.server.overworld`, `level.persistentData`, and the `Heightmap$Types` class
-// lookup are the calls most likely to need adjusting if this errors on boot.
+// 2026-08-18: originally tried to skip this scan after the first boot using
+// `level.persistentData`, which doesn't exist on this KubeJS/Forge version and crashed
+// `ServerEvents.loaded` on every single boot (TypeError: Cannot call method "getBoolean"
+// of undefined) — meaning this script silently never ran at all, and spawn was whatever
+// vanilla + Tectonic's own search produced. Dropped the persistence entirely: this now
+// just re-runs every boot. Cheap after the first run anyway, since the relevant chunks
+// are already generated, and `/setworldspawn` doesn't move a player who's already online.
 
+// Keep in sync with PROJECT_PLAN.md's elevation-exclusion rule and the biomes left out
+// of every main/kubejs/data/climate/tags/worldgen/biome/band_*.json file — this list
+// previously only had the 9 vanilla entries and silently missed all 6 Biomes We've Gone
+// exclusions, which is how spawn landed in a peaks biome despite this script running.
 const ELEVATION_BIOMES = [
     'minecraft:frozen_peaks',
     'minecraft:jagged_peaks',
@@ -28,20 +29,24 @@ const ELEVATION_BIOMES = [
     'minecraft:windswept_hills',
     'minecraft:windswept_gravelly_hills',
     'minecraft:windswept_forest',
-    'minecraft:windswept_savanna'
+    'minecraft:windswept_savanna',
+    'biomeswevegone:canadian_shield',
+    'biomeswevegone:crag_gardens',
+    'biomeswevegone:howling_peaks',
+    'biomeswevegone:red_rock_peaks',
+    'biomeswevegone:shattered_glacier',
+    'biomeswevegone:windswept_desert'
 ]
 
-const MAX_SEARCH_RADIUS = 160
+// 160 turned out too small on Tectonic terrain — a mountain range near origin can easily
+// span more than that in every direction. Mild's ring radius is ~28% of equatorial_distance
+// (5000), i.e. ~1400 blocks, so 800 stays comfortably inside it with room to spare.
+const MAX_SEARCH_RADIUS = 800
 const SEARCH_STEP = 32
 const MAX_SPAWN_Y = 120 // matches biomeEffects.js's elevation-override threshold
 
 ServerEvents.loaded(event => {
     const level = event.server.overworld
-
-    if (level.persistentData.getBoolean('clnSpawnPinned')) {
-        console.log('forceSpawnAtOrigin: spawn already pinned on a previous boot, skipping scan')
-        return
-    }
 
     const HeightmapTypes = Java.loadClass('net.minecraft.world.level.levelgen.Heightmap$Types')
     const BlockPos = Java.loadClass('net.minecraft.core.BlockPos')
@@ -60,15 +65,17 @@ ServerEvents.loaded(event => {
     let found = false
 
     for (let i = 0; i < candidates.length && !found; i++) {
-        const cx = candidates[i].x
-        const cz = candidates[i].z
-        const surfaceY = level.getHeight(HeightmapTypes.WORLD_SURFACE, cx, cz)
+        // var, not const/let: Rhino's block scoping re-declares these each iteration and
+        // throws "redeclaration of var cx" if declared with const/let inside a loop body.
+        var cx = candidates[i].x
+        var cz = candidates[i].z
+        var surfaceY = level.getHeight(HeightmapTypes.WORLD_SURFACE, cx, cz)
 
         if (surfaceY > MAX_SPAWN_Y)
             continue
 
-        const biome = level.getBiome(new BlockPos(cx, surfaceY, cz))
-        const biomeId = biome.unwrapKey().get().location().toString()
+        var biome = level.getBiome(new BlockPos(cx, surfaceY, cz))
+        var biomeId = biome.unwrapKey().get().location().toString()
 
         if (ELEVATION_BIOMES.indexOf(biomeId) === -1) {
             spawnX = cx
@@ -78,9 +85,11 @@ ServerEvents.loaded(event => {
         }
     }
 
-    if (!found)
-        console.log('forceSpawnAtOrigin: no non-mountain spawn found within ' + MAX_SEARCH_RADIUS + ' blocks of origin, falling back to (0, 100, 0)')
-
     event.server.runCommandSilent('execute in minecraft:overworld run setworldspawn ' + spawnX + ' ' + spawnY + ' ' + spawnZ)
-    level.persistentData.putBoolean('clnSpawnPinned', true)
+
+    if (found) {
+        console.log('forceSpawnAtOrigin: pinned spawn to (' + spawnX + ', ' + spawnY + ', ' + spawnZ + ')')
+    } else {
+        console.log('forceSpawnAtOrigin: no non-mountain spawn found within ' + MAX_SEARCH_RADIUS + ' blocks of origin, falling back to (0, 100, 0)')
+    }
 })

@@ -247,39 +247,53 @@ Do this first; it's what caused the sync bugs and will keep causing them otherwi
 `naturaltemperature-common.toml`'s and `tectonic.json`'s changes need to be copied to
 the instance manually to test.
 
-### Phase 2 — Ore restriction
-- **Vanilla ores:** new `remove_default_ores.json` biome modifier (same
-  `forge:remove_features` pattern already proven in `remove_molten_vents.json`),
-  targeting `#minecraft:is_overworld`, removing `minecraft:ore_gold`,
-  `minecraft:ore_gold_extra`, `minecraft:ore_redstone`, `minecraft:ore_lapis`,
-  `minecraft:ore_lapis_buried`, `minecraft:ore_emerald`. Leave iron, coal, diamond,
-  copper untouched (all their variants).
-- **Create:** `disableWorldGen` stays `false` — zinc/copper keep spawning normally,
+### Phase 2 — Ore restriction — DONE, pending in-game verification
+
+- **2026-08-18:** added `climate/forge/biome_modifier/remove_default_ores.json`
+  (`forge:remove_features`, same pattern as `remove_molten_vents.json`), targeting
+  `#minecraft:is_overworld`, removing `minecraft:ore_gold`, `minecraft:ore_gold_extra`,
+  `minecraft:ore_redstone`, `minecraft:ore_lapis`, `minecraft:ore_lapis_buried`,
+  `minecraft:ore_emerald` at the `underground_ores` step. Iron, coal, diamond, copper
+  left untouched.
+- **Create:** `disableWorldGen` left `false` — zinc/copper keep spawning normally,
   nothing to do.
 - **Mekanism:** in `Mekanism/world.toml`, set `shouldGenerate = false` for every vein
   size under `[world_generation.tin]`, `[world_generation.osmium]`,
-  `[world_generation.uranium]`, `[world_generation.fluorite]`, `[world_generation.lead]`.
-  Leave `[world_generation.salt]` untouched.
-- In-game validation: creative-mode spot check per removed ore type; confirm JEI still
-  shows the item (for recipes) but it no longer appears in generated chunks.
+  `[world_generation.uranium]`, `[world_generation.fluorite]`, `[world_generation.lead]`
+  (15 flags total, including the top-level per-metal toggle and each named vein size).
+  `[world_generation.salt]` left `true`, unchanged.
+- Now consistent with Phase 3's vent wiring: these five metals should only be
+  obtainable from Molten Vents, plus whatever spawned in already-generated chunks
+  before this change.
+- In-game validation still open: creative-mode spot check per removed ore type; confirm
+  JEI still shows the item (for recipes) but it no longer appears in newly generated
+  chunks. Needs a **new world or unexplored chunks** to test — already-generated chunks
+  keep whatever ore they already placed.
 
-### Phase 3 — Molten Vents metal wiring
-- Re-enable the mod: rename `create_resource_vents-1.3.jar.disabled` →
-  `create_resource_vents-1.3.jar`.
-- Rewrite `create_resource_vents.json` so each vent's `generatedBlocks` points at the
-  correct Mekanism ore block per the mapping table above, instead of Create's
-  decorative stone. Decide whether to vary `reactantFluids` per vent for flavor (all
-  currently just `minecraft:lava`) — optional, not required for function.
-- Move `ochrum` out of `hot_vents_add.json` into a new `scorching_vents_add.json`
-  (band: Scorching).
-- Add `frozen_vents_add.json` adding `climate:veridium_vent_common` to the Frozen band
-  (placed-feature file already exists, just never had a biome modifier pointing at it).
-- `asurine`/`crimsite` stay on Mild; `scoria` stays on Cold; `scorchia` stays on Hot —
-  update these three files' `generatedBlocks` for their new metal outputs but no band
-  reassignment needed.
-- In-game validation: visit each band, trigger a vent (per `molten_vents-common.toml`,
-  `useLiquid = true` means a constant liquid supply is required), confirm the correct
-  ore block generates and processes into the intended ingot.
+### Phase 3 — Molten Vents metal wiring — DONE, pending in-game verification
+
+- **2026-08-18:** re-enabled the mod (`create_resource_vents-1.3.jar.disabled` →
+  `create_resource_vents-1.3.jar` in the instance's `mods/` folder).
+- Rewrote `create_resource_vents.json`: every vent's `generatedBlocks` now lists the
+  band's Mekanism ore + its deepslate variant (both block IDs from the mapping table)
+  instead of Create's decorative stone. `reactantFluids` left as `minecraft:lava` for
+  all six — no flavor variation added.
+- Moved `ochrum` out of `hot_vents_add.json` into new `scorching_vents_add.json`
+  (`#climate:band_scorching`).
+- Added `frozen_vents_add.json` wiring `climate:veridium_vent_common` to
+  `#climate:band_frozen` — that placed-feature existed since Phase 0/1 but had no
+  biome modifier pointing at it until now.
+- `asurine`/`crimsite` (Mild), `scoria` (Cold), `scorchia` (Hot) kept their existing
+  band biome-modifier files, only `generatedBlocks` changed.
+- **Not done yet — Phase 2 (ore restriction) hasn't run.** Checked
+  `main/config/Mekanism/world.toml`: `shouldGenerate` is still `true` for tin, osmium,
+  uranium, and fluorite veins. Until Phase 2 sets those to `false`, these five metals
+  will *also* spawn as normal Mekanism ore veins everywhere, alongside the vents —
+  vent output is correctly wired, but not yet the sole source.
+- In-game validation still open: visit each band, trigger a vent (per
+  `molten_vents-common.toml`, `useLiquid = true` means a constant liquid supply is
+  required), confirm the correct ore block generates and processes into the intended
+  ingot.
 
 ### Phase 4 — Player feedback polish
 - Extend `biomeEffects.js` from binary hot/cold to graduated severity across all 5

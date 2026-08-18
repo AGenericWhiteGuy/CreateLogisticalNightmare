@@ -4,7 +4,11 @@
       "name": "asurine",
       "generatedBlocks": [
         {
-          "id": "create:asurine",
+          "id": "mekanism:osmium_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_osmium_ore",
           "properties": []
         }
       ],
@@ -16,7 +20,11 @@
       "name": "veridium",
       "generatedBlocks": [
         {
-          "id": "create:veridium",
+          "id": "mekanism:fluorite_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_fluorite_ore",
           "properties": []
         }
       ],
@@ -28,7 +36,11 @@
       "name": "crimsite",
       "generatedBlocks": [
         {
-          "id": "create:crimsite",
+          "id": "mekanism:osmium_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_osmium_ore",
           "properties": []
         }
       ],
@@ -40,7 +52,11 @@
       "name": "ochrum",
       "generatedBlocks": [
         {
-          "id": "create:ochrum",
+          "id": "mekanism:uranium_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_uranium_ore",
           "properties": []
         }
       ],
@@ -52,7 +68,11 @@
       "name": "scorchia",
       "generatedBlocks": [
         {
-          "id": "create:scorchia",
+          "id": "mekanism:lead_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_lead_ore",
           "properties": []
         }
       ],
@@ -64,7 +84,11 @@
       "name": "scoria",
       "generatedBlocks": [
         {
-          "id": "create:scoria",
+          "id": "mekanism:tin_ore",
+          "properties": []
+        },
+        {
+          "id": "mekanism:deepslate_tin_ore",
           "properties": []
         }
       ],
