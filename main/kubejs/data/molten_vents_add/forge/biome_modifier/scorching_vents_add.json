@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#climate:band_scorching",
+  "features": [
+  "climate:ochrum_vent_common"
+  ],
+  "step": "vegetal_decoration"
+}
